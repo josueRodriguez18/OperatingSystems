@@ -6,29 +6,30 @@
 
 
 
-#define ISDIR 4
+#define ISDIR 4 //d_type for directory is 4
 
 
 
 int find(const char *WTL){
     DIR* dot; struct dirent* nextdir;
     DIR* dot1;
-    if(WTL == NULL){
-        dot = opendir(".");   
+    if(WTL == NULL){ //if no directory specified, check current dir
+        dot = opendir("."); //open buffer at current directory  
     }
     else{
-        dot = opendir(WTL);
+        dot = opendir(WTL); //open buffer at specified directory
     }
-    if(dot == NULL){
-        printf("Cannot open");
+    if(dot == NULL){ //could not open dir
+        printf("Cannot open"); //indicated directory could not be opened
     }
-    nextdir = readdir(dot + 1);
-    while ((nextdir = readdir(dot)) != NULL){
-        if(nextdir->d_type == ISDIR){
+    //nextdir = readdir(dot + 1);
+    while ((nextdir = readdir(dot)) != NULL){ //check next address
+        if(nextdir->d_type == ISDIR){ //if it is a directory check it
             printf("hello");
-            dot1 = opendir(nextdir->d_name + '/');
+            dot1 = opendir(nextdir->d_name + '/'); //open buffer at directory
+            //call find at subdirectory
         }
-        printf("%s ", nextdir->d_name);
+        printf("%s ", nextdir->d_name); //print entry name
         printf("%u \n", nextdir->d_type); //directory is 4
     }
     return 0;
