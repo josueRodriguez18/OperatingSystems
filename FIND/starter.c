@@ -23,11 +23,13 @@ int find(const char *WTL){
         printf("Cannot open"); //indicated directory could not be opened
     }
     //nextdir = readdir(dot + 1);
+    // nextdir = readdir(dot);
+    // nextdir = readdir(dot);
     while ((nextdir = readdir(dot)) != NULL){ //check next address
         if(nextdir->d_type == ISDIR){ //if it is a directory check it
             printf("hello");
-            dot1 = opendir(nextdir->d_name + '/'); //open buffer at directory
-            //call find at subdirectory
+            dot1 = opendir(nextdir->d_name); //open buffer at directory
+            //find(nextdir->d_name);//call find at subdirectory
         }
         printf("%s ", nextdir->d_name); //print entry name
         printf("%u \n", nextdir->d_type); //directory is 4
