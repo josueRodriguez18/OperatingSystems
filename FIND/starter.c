@@ -11,8 +11,8 @@
 
 
 
-char * find(const char *WTL){
-    char * temp;
+int find(const char *WTL){
+    char temp[1];
     DIR* dot; struct dirent* nextEnt; char lastSlash[] = "/";
     DIR* dot1; char filenamer[100] = "./"; char* dirName; char *nextPath;
     if(WTL == NULL){ //if no directory specified, check current dir
@@ -30,22 +30,23 @@ char * find(const char *WTL){
             dirName = nextEnt->d_name;
             nextPath = strcat(filenamer, dirName); 
             nextPath = strcat(nextPath, lastSlash);
+            printf("inside");
             printf("\n %s", nextPath);
             scanf("%s", temp);
             
             //find(nextPath);
-            return nextPath;
         }
         printf("\n %s ", nextEnt->d_name); //print entry name
     }
+
     return 0;
 }
 
 int main(){
-    char str[10]; char * temp;
-    temp = find(NULL);
-    printf("\n %s", temp);
+    char str[10]; char temp[1];
+    find(NULL);
     printf("passed first");
+    printf("\n %s", temp);
     scanf("%s", str);
     find(temp);
     printf("passed both");
