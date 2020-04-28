@@ -11,20 +11,10 @@
 
 
 
-char * trimmer(char *array){
-    char * temp; int i = 0; temp = array;
-    for(i = 0; array[i] != NULL; i++);
-    free(array);
-    array = (char*)malloc((i+1)*sizeof(char));
-    for(int j = 0; j < i;j++){
-        array[j] = temp[j];
-    }
-}
-
-
-int find(const char *WTL){
-    DIR* dot; struct dirent* nextdir; char lastSlash[1] = "/";
-    DIR* dot1; char filenamer[100] = "/"; char* dirName; char *nexter;
+char * find(const char *WTL){
+    char * temp;
+    DIR* dot; struct dirent* nextEnt; char lastSlash[] = "/";
+    DIR* dot1; char filenamer[100] = "./"; char* dirName; char *nextPath;
     if(WTL == NULL){ //if no directory specified, check current dir
         dot = opendir("."); //open buffer at current directory  
     }
@@ -34,29 +24,31 @@ int find(const char *WTL){
     if(dot == NULL){ //could not open dir
         printf("Cannot open"); //indicated directory could not be opened
     }
-    //nextdir = readdir(dot + 1);
-    nextdir = readdir(dot);
-    nextdir = readdir(dot); 
-    while ((nextdir = readdir(dot)) != NULL){ //check next address
-        if(nextdir->d_type == ISDIR){ //if it is a directory check it
-            nexter = (char*)malloc((strlen(nextdir->d_name))*sizeof(char));
-            dirName = nextdir->d_name;
-            nexter = strcat(filenamer, dirName); 
-            nexter = strcat(nexter, lastSlash);
-            printf("\n %s", nexter);
-            //find(nexter);
-            //find(strcat(nextdir->d_name, temp));//call find at subdirectory
+    nextEnt = readdir(dot); nextEnt = readdir(dot); //skips .. and . directories
+    while ((nextEnt = readdir(dot)) != NULL){ //check next address
+        if(nextEnt->d_type == ISDIR){ //if it is a directory check it
+            dirName = nextEnt->d_name;
+            nextPath = strcat(filenamer, dirName); 
+            nextPath = strcat(nextPath, lastSlash);
+            printf("\n %s", nextPath);
+            scanf("%s", temp);
+            
+            //find(nextPath);
+            return nextPath;
         }
-        printf("\n %s ", nextdir->d_name); //print entry name
+        printf("\n %s ", nextEnt->d_name); //print entry name
     }
     return 0;
 }
 
 int main(){
-    char str1[20] = "hello";
-    trimmer(str1);
-    printf("%s", str1);
-    find(NULL);
-    scanf("%s", str1);
+    char str[10]; char * temp;
+    temp = find(NULL);
+    printf("\n %s", temp);
+    printf("passed first");
+    scanf("%s", str);
+    find(temp);
+    printf("passed both");
+    scanf("%s", str);
     return 0;
 }
